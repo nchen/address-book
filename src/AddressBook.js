@@ -1,72 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
+import addressData from "./addressData.json";
+import { initialState, addressBookReducer } from "./addressBookReducer";
+import { produce } from 'immer';
+import { useImmerReducer } from "use-immer";
 
-const addressData = [
-  {
-    id: 501,
-    name: "Khali Zhang",
-    location: "Shanghai",
-    office: "C-103",
-    officePhone: "x55778",
-    cellphone: "650-353-1239",
-  },
-  {
-    id: 200,
-    name: "Tom Hanks",
-    location: "Beijing",
-    office: "A-001",
-    officePhone: "y86759",
-    cellphone: "138-002-93494",
-  },
-  {
-    id: 302,
-    name: "Jerry Mouse",
-    location: "Shenzhen",
-    office: "E-012",
-    officePhone: "x29345",
-    cellphone: "139-353-9999",
-  },
-  {
-    id: 25,
-    name: "Mary",
-    location: "Shanghai",
-    office: "B-302",
-    officePhone: "z93954",
-    cellphone: "185-123-4567",
-  },
-  {
-    id: 987,
-    name: "Tom Cat",
-    location: "Shenzhen",
-    office: "E-011",
-    officePhone: "x93945",
-    cellphone: "180-123-4567",
-  },
-  {
-    id: 123,
-    name: "Brandon",
-    location: "Chengdu",
-    office: "D-503",
-    officePhone: "y20394",
-    cellphone: "138-000-6666",
-  },
-];
+const _initialState = { ...initialState, data: addressData };
 
 const sortBy = (data, column) => {
-  console.log("Ordering by: ", column);
-  data.sort((a, b) => {
-    if (a[column] < b[column]) {
-      return -1;
-    } else if (a[column] > b[column]) {
-      return 1;
-    }
-    return 0;
-  });
-  return data;
+  return produce(data, draft => {
+    console.log("Ordering by: ", column);
+    draft.sort((a, b) => {
+      if (a[column] < b[column]) {
+        return -1;
+      } else if (a[column] > b[column]) {
+        return 1;
+      }
+      return 0;
+    });
+  })
+
 };
 
 const AddressBook = () => {
-  let [column, setColumn] = useState("id");
-  let data = sortBy(addressData, column);
+  let [state, dispatch] = useImmerReducer(addressBookReducer, _initialState);
+
+  // let [column, setColumn] = useState("id");
+  const data = sortBy(state.data, state.sortBy);
+  // let [editingRow, setEditingRow] = useState(-1);
 
   return (
     <table border="1" cellPadding="5">
@@ -75,23 +35,41 @@ const AddressBook = () => {
           <th rowSpan="2">
             <input type="checkbox" />
           </th>
-          <th rowSpan="2" onClick={() => setColumn("id")}>
+          <th
+            rowSpan="2"
+            onClick={() => dispatch({ type: "sort", payload: "id" })}
+          >
             ID
           </th>
-          <th rowSpan="2" onClick={() => setColumn("name")}>
+          <th
+            rowSpan="2"
+            onClick={() => dispatch({ type: "sort", payload: "name" })}
+          >
             Name
           </th>
-          <th rowSpan="2" onClick={() => setColumn("location")}>
+          <th
+            rowSpan="2"
+            onClick={() => dispatch({ type: "sort", payload: "location" })}
+          >
             Location
           </th>
-          <th rowSpan="2" onClick={() => setColumn("office")}>
+          <th
+            rowSpan="2"
+            onClick={() => dispatch({ type: "sort", payload: "office" })}
+          >
             Office
           </th>
           <th colSpan="2">Phone</th>
         </tr>
         <tr>
-          <th onClick={() => setColumn("officePhone")}>Office</th>
-          <th onClick={() => setColumn("cellphone")}>Home</th>
+          <th
+            onClick={() => dispatch({ type: "sort", payload: "officePhone" })}
+          >
+            Office
+          </th>
+          <th onClick={() => dispatch({ type: "sort", payload: "cellphone" })}>
+            Home
+          </th>
         </tr>
         {data.map((addr) => (
           <tr key={addr.id}>
@@ -103,7 +81,18 @@ const AddressBook = () => {
             <td>{addr.location}</td>
             <td>{addr.office}</td>
             <td>{addr.officePhone}</td>
-            <td>{addr.cellphone}</td>
+            <td
+              onDoubleClick={() => dispatch({ type: "edit", payload: addr.id })}
+              onChange={(evt) =>
+                dispatch({ type: "phone_changed", payload: evt.target.value })
+              }
+            >
+              {state.editingRowId === addr.id ? (
+                <input value={addr.cellphone} />
+              ) : (
+                addr.cellphone
+              )}
+            </td>
           </tr>
         ))}
       </tbody>

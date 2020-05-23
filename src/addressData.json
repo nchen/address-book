@@ -1,0 +1,50 @@
+[
+  {
+    "id": 501,
+    "name": "Khali Zhang",
+    "location": "Shanghai",
+    "office": "C-103",
+    "officePhone": "x55778",
+    "cellphone": "650-353-1239"
+  },
+  {
+    "id": 200,
+    "name": "Tom Hanks",
+    "location": "Beijing",
+    "office": "A-001",
+    "officePhone": "y86759",
+    "cellphone": "138-002-93494"
+  },
+  {
+    "id": 302,
+    "name": "Jerry Mouse",
+    "location": "Shenzhen",
+    "office": "E-012",
+    "officePhone": "x29345",
+    "cellphone": "139-353-9999"
+  },
+  {
+    "id": 25,
+    "name": "Mary",
+    "location": "Shanghai",
+    "office": "B-302",
+    "officePhone": "z93954",
+    "cellphone": "185-123-4567"
+  },
+  {
+    "id": 987,
+    "name": "Tom Cat",
+    "location": "Shenzhen",
+    "office": "E-011",
+    "officePhone": "x93945",
+    "cellphone": "180-123-4567"
+  },
+  {
+    "id": 123,
+    "name": "Brandon",
+    "location": "Chengdu",
+    "office": "D-503",
+    "officePhone": "y20394",
+    "cellphone": "138-000-6666"
+  }
+]
