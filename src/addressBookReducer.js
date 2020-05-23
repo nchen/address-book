@@ -47,7 +47,16 @@ const addressBookReducer = function (state, action) {
       }
       return state;
     case "sort":
-      state.sortBy = action.payload;
+      const column = action.payload;
+      state.sortBy = column;
+      state.data.sort((a, b) => {
+        if (a[column] < b[column]) {
+          return -1;
+        } else if (a[column] > b[column]) {
+          return 1;
+        }
+        return 0;
+      });
       return state;
     default:
       return state;

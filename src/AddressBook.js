@@ -1,31 +1,12 @@
-import React, { useState, useReducer } from "react";
+import React from "react";
 import addressData from "./addressData.json";
 import { initialState, addressBookReducer } from "./addressBookReducer";
-import { produce } from "immer";
 import { useImmerReducer } from "use-immer";
 
 const _initialState = { ...initialState, data: addressData };
 
-const sortBy = (data, column) => {
-  return produce(data, (draft) => {
-    console.log("Ordering by: ", column);
-    draft.sort((a, b) => {
-      if (a[column] < b[column]) {
-        return -1;
-      } else if (a[column] > b[column]) {
-        return 1;
-      }
-      return 0;
-    });
-  });
-};
-
 const AddressBook = () => {
   let [state, dispatch] = useImmerReducer(addressBookReducer, _initialState);
-
-  // let [column, setColumn] = useState("id");
-  const data = sortBy(state.data, state.sortBy);
-  // let [editingRow, setEditingRow] = useState(-1);
 
   return (
     <div>
@@ -36,7 +17,7 @@ const AddressBook = () => {
               <input
                 type="checkbox"
                 checked={state.selectAll}
-                onClick={() => dispatch({ type: "select_all" })}
+                onChange={() => dispatch({ type: "select_all" })}
               />
             </th>
             <th
@@ -77,13 +58,13 @@ const AddressBook = () => {
               Home
             </th>
           </tr>
-          {data.map((addr) => (
+          {state.data.map((addr) => (
             <tr key={addr.id}>
               <td>
                 <input
                   type="checkbox"
                   checked={addr.selected || false}
-                  onClick={() => dispatch({ type: "select", payload: addr.id })}
+                  onChange={() => dispatch({ type: "select", payload: addr.id })}
                 />
               </td>
               <td>{addr.id}</td>
