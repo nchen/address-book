@@ -28,82 +28,93 @@ const AddressBook = () => {
   // let [editingRow, setEditingRow] = useState(-1);
 
   return (
-    <table border="1" cellPadding="5">
-      <tbody>
-        <tr>
-          <th rowSpan="2">
-            <input
-              type="checkbox"
-              checked={state.selectAll}
-              onClick={() => dispatch({ type: "select_all" })}
-            />
-          </th>
-          <th
-            rowSpan="2"
-            onClick={() => dispatch({ type: "sort", payload: "id" })}
-          >
-            ID
-          </th>
-          <th
-            rowSpan="2"
-            onClick={() => dispatch({ type: "sort", payload: "name" })}
-          >
-            Name
-          </th>
-          <th
-            rowSpan="2"
-            onClick={() => dispatch({ type: "sort", payload: "location" })}
-          >
-            Location
-          </th>
-          <th
-            rowSpan="2"
-            onClick={() => dispatch({ type: "sort", payload: "office" })}
-          >
-            Office
-          </th>
-          <th colSpan="2">Phone</th>
-        </tr>
-        <tr>
-          <th
-            onClick={() => dispatch({ type: "sort", payload: "officePhone" })}
-          >
-            Office
-          </th>
-          <th onClick={() => dispatch({ type: "sort", payload: "cellphone" })}>
-            Home
-          </th>
-        </tr>
-        {data.map((addr) => (
-          <tr key={addr.id}>
-            <td>
+    <div>
+      <table border="1" cellPadding="5">
+        <tbody>
+          <tr>
+            <th rowSpan="2">
               <input
                 type="checkbox"
-                checked={addr.selected || false}
-                onClick={() => dispatch({ type: "select", payload: addr.id })}
+                checked={state.selectAll}
+                onClick={() => dispatch({ type: "select_all" })}
               />
-            </td>
-            <td>{addr.id}</td>
-            <td>{addr.name}</td>
-            <td>{addr.location}</td>
-            <td>{addr.office}</td>
-            <td>{addr.officePhone}</td>
-            <td
-              onDoubleClick={() => dispatch({ type: "edit", payload: addr.id })}
-              onChange={(evt) =>
-                dispatch({ type: "phone_changed", payload: evt.target.value })
-              }
+            </th>
+            <th
+              rowSpan="2"
+              onClick={() => dispatch({ type: "sort", payload: "id" })}
             >
-              {state.editingRowId === addr.id ? (
-                <input value={addr.cellphone} />
-              ) : (
-                addr.cellphone
-              )}
-            </td>
+              ID
+            </th>
+            <th
+              rowSpan="2"
+              onClick={() => dispatch({ type: "sort", payload: "name" })}
+            >
+              Name
+            </th>
+            <th
+              rowSpan="2"
+              onClick={() => dispatch({ type: "sort", payload: "location" })}
+            >
+              Location
+            </th>
+            <th
+              rowSpan="2"
+              onClick={() => dispatch({ type: "sort", payload: "office" })}
+            >
+              Office
+            </th>
+            <th colSpan="2">Phone</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+          <tr>
+            <th
+              onClick={() => dispatch({ type: "sort", payload: "officePhone" })}
+            >
+              Office
+            </th>
+            <th
+              onClick={() => dispatch({ type: "sort", payload: "cellphone" })}
+            >
+              Home
+            </th>
+          </tr>
+          {data.map((addr) => (
+            <tr key={addr.id}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={addr.selected || false}
+                  onClick={() => dispatch({ type: "select", payload: addr.id })}
+                />
+              </td>
+              <td>{addr.id}</td>
+              <td>{addr.name}</td>
+              <td>{addr.location}</td>
+              <td>{addr.office}</td>
+              <td>{addr.officePhone}</td>
+              <td
+                onDoubleClick={() =>
+                  dispatch({ type: "edit", payload: addr.id })
+                }
+                onChange={(evt) =>
+                  dispatch({ type: "phone_changed", payload: evt.target.value })
+                }
+              >
+                {state.editingRowId === addr.id ? (
+                  <input value={addr.cellphone} />
+                ) : (
+                  addr.cellphone
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div>
+        <button onClick={() => dispatch({ type: "delete" })}>Delete</button>
+        <button>Update</button>
+        <button>Add</button>
+      </div>
+    </div>
   );
 };
 

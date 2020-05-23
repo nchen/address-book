@@ -36,10 +36,15 @@ const addressBookReducer = function (state, action) {
           row.cellphone = action.payload;
         }
       });
-      //  TODO:
       return state;
     case "delete":
-      state.deletedRowIds.push(action.payload);
+      for (let i = state.data.length - 1; i >= 0; i--) {
+        const row = state.data[i];
+        if (row.selected) {
+          state.data.splice(i, 1);
+          state.deletedRowIds.push(row.id);
+        }
+      }
       return state;
     case "sort":
       state.sortBy = action.payload;
