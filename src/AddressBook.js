@@ -64,7 +64,9 @@ const AddressBook = () => {
                 <input
                   type="checkbox"
                   checked={addr.selected || false}
-                  onChange={() => dispatch({ type: "select", payload: addr.id })}
+                  onChange={() =>
+                    dispatch({ type: "select", payload: addr.id })
+                  }
                 />
               </td>
               <td>{addr.id}</td>
@@ -88,12 +90,35 @@ const AddressBook = () => {
               </td>
             </tr>
           ))}
+          {state.adding ? (
+            <tr>
+              <td></td>
+              <td>
+                <input />
+              </td>
+              <td>
+                <input />
+              </td>
+              <td>
+                <input />
+              </td>
+              <td>
+                <input />
+              </td>
+              <td>
+                <input />
+              </td>
+              <td>
+                <input />
+              </td>
+            </tr>
+          ) : null}
         </tbody>
       </table>
       <div>
         <button onClick={() => dispatch({ type: "delete" })}>Delete</button>
         <button>Update</button>
-        <button>Add</button>
+        <button onClick={() => dispatch({ type: "add" })}>Add</button>
       </div>
     </div>
   );

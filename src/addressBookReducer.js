@@ -5,6 +5,7 @@ const initialState = {
   editingRowId: -1,
   editedCellphones: {},
   deletedRowIds: [],
+  adding: false,
 };
 
 const addressBookReducer = function (state, action) {
@@ -45,6 +46,9 @@ const addressBookReducer = function (state, action) {
           state.deletedRowIds.push(row.id);
         }
       }
+      return state;
+    case "add":
+      state.adding = true;
       return state;
     case "sort":
       const column = action.payload;
