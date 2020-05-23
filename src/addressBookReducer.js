@@ -1,5 +1,6 @@
 const initialState = {
   data: [],
+  selectAll: false,
   sortBy: "id",
   editingRowId: -1,
   editedCellphones: {},
@@ -11,17 +12,30 @@ const addressBookReducer = function (state, action) {
     case "load":
       state.data = action.payload;
       return state;
+    case "select":
+      state.data.forEach((row) => {
+        if (row.id === action.payload) {
+          row.selected = !(row.selected || false);
+        }
+      });
+      return state;
+    case "select_all":
+      state.selectAll = !state.selectAll;
+      state.data.forEach((row) => {
+        row.selected = state.selectAll;
+      });
+      return state;
     case "edit":
       state.editingRowId = action.payload;
       return state;
     case "phone_changed":
-      console.log(state.editingRowId, action.payload)
+      console.log(state.editingRowId, action.payload);
       state.editedCellphones[state.editingRowId] = action.payload;
-      state.data.forEach(row => {
+      state.data.forEach((row) => {
         if (row.id === state.editingRowId) {
           row.cellphone = action.payload;
         }
-      })
+      });
       //  TODO:
       return state;
     case "delete":

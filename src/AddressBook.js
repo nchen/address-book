@@ -1,13 +1,13 @@
 import React, { useState, useReducer } from "react";
 import addressData from "./addressData.json";
 import { initialState, addressBookReducer } from "./addressBookReducer";
-import { produce } from 'immer';
+import { produce } from "immer";
 import { useImmerReducer } from "use-immer";
 
 const _initialState = { ...initialState, data: addressData };
 
 const sortBy = (data, column) => {
-  return produce(data, draft => {
+  return produce(data, (draft) => {
     console.log("Ordering by: ", column);
     draft.sort((a, b) => {
       if (a[column] < b[column]) {
@@ -17,8 +17,7 @@ const sortBy = (data, column) => {
       }
       return 0;
     });
-  })
-
+  });
 };
 
 const AddressBook = () => {
@@ -33,7 +32,11 @@ const AddressBook = () => {
       <tbody>
         <tr>
           <th rowSpan="2">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={state.selectAll}
+              onClick={() => dispatch({ type: "select_all" })}
+            />
           </th>
           <th
             rowSpan="2"
@@ -74,7 +77,11 @@ const AddressBook = () => {
         {data.map((addr) => (
           <tr key={addr.id}>
             <td>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={addr.selected || false}
+                onClick={() => dispatch({ type: "select", payload: addr.id })}
+              />
             </td>
             <td>{addr.id}</td>
             <td>{addr.name}</td>
