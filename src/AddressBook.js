@@ -29,6 +29,7 @@ const AddressBook = () => {
     const updateData = {
       deletedRowIds: state.deletedRowIds,
       editedCellphones,
+      addedRow: state.addedRow,
     };
     setMsg("Updating data: \n" + JSON.stringify(updateData));
     setShowDialog(true);
@@ -128,23 +129,59 @@ const AddressBook = () => {
           {state.adding ? (
             <tr>
               <td></td>
+              <td></td>
               <td>
-                <input />
+                <input
+                  onChange={(evt) =>
+                    dispatch({
+                      type: "add_input_changed",
+                      payload: { field: "name", value: evt.target.value },
+                    })
+                  }
+                />
               </td>
               <td>
-                <input />
+                <input
+                  onChange={(evt) =>
+                    dispatch({
+                      type: "add_input_changed",
+                      payload: { field: "location", value: evt.target.value },
+                    })
+                  }
+                />
               </td>
               <td>
-                <input />
+                <input
+                  onChange={(evt) =>
+                    dispatch({
+                      type: "add_input_changed",
+                      payload: { field: "office", value: evt.target.value },
+                    })
+                  }
+                />
               </td>
               <td>
-                <input />
+                <input
+                  onChange={(evt) =>
+                    dispatch({
+                      type: "add_input_changed",
+                      payload: {
+                        field: "officePhone",
+                        value: evt.target.value,
+                      },
+                    })
+                  }
+                />
               </td>
               <td>
-                <input />
-              </td>
-              <td>
-                <input />
+                <input
+                  onChange={(evt) =>
+                    dispatch({
+                      type: "add_input_changed",
+                      payload: { field: "cellphone", value: evt.target.value },
+                    })
+                  }
+                />
               </td>
             </tr>
           ) : null}
