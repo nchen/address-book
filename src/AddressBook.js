@@ -2,15 +2,26 @@ import React from "react";
 import addressData from "./addressData.json";
 import { initialState, addressBookReducer } from "./addressBookReducer";
 import { useImmerReducer } from "use-immer";
+import { produce } from "immer";
 
 const _initialState = { ...initialState, data: addressData };
 
 const doUpdate = (state) => {
+  // Exclude deleted rows for updating.
+  let editedCellphones = produce(state.editedCellphones, draft => {
+    for (let id in draft) {
+      const rowId = parseInt(id)
+      if (state.deletedRowIds.indexOf(rowId) > -1) {
+        delete draft[id];
+      }
+    }
+  })
+
   const updateData = {
     deletedRowIds: state.deletedRowIds,
-    editedCellphones: state.editedCellphones
-  }
-  alert('Updating data: \n' + JSON.stringify(updateData));
+    editedCellphones,
+  };
+  alert("Updating data: \n" + JSON.stringify(updateData));
 };
 
 const AddressBook = () => {
@@ -86,12 +97,17 @@ const AddressBook = () => {
                 onDoubleClick={() =>
                   dispatch({ type: "edit", payload: addr.id })
                 }
-                onChange={(evt) =>
-                  dispatch({ type: "phone_changed", payload: evt.target.value })
-                }
               >
                 {state.editingRowId === addr.id ? (
-                  <input value={addr.cellphone} />
+                  <input
+                    value={addr.cellphone}
+                    onChange={(evt) =>
+                      dispatch({
+                        type: "phone_changed",
+                        payload: evt.target.value,
+                      })
+                    }
+                  />
                 ) : (
                   addr.cellphone
                 )}
