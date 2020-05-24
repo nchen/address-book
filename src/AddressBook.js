@@ -30,7 +30,7 @@ const AddressBook = () => {
   return (
     <div>
       <table border="1" cellPadding="5">
-        <tbody>
+        <thead>
           <tr>
             <th rowSpan="2">
               <input
@@ -77,6 +77,8 @@ const AddressBook = () => {
               Home
             </th>
           </tr>
+        </thead>
+        <tbody>
           {state.data.map((addr) => (
             <tr key={addr.id}>
               <td>
