@@ -1,4 +1,5 @@
 import React from "react";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import addressData from "./addressData.json";
 import { initialState, addressBookReducer } from "./addressBookReducer";
 import { useImmerReducer } from "use-immer";
@@ -8,14 +9,14 @@ const _initialState = { ...initialState, data: addressData };
 
 const doUpdate = (state) => {
   // Exclude deleted rows for updating.
-  let editedCellphones = produce(state.editedCellphones, draft => {
+  let editedCellphones = produce(state.editedCellphones, (draft) => {
     for (let id in draft) {
-      const rowId = parseInt(id)
+      const rowId = parseInt(id);
       if (state.deletedRowIds.indexOf(rowId) > -1) {
         delete draft[id];
       }
     }
-  })
+  });
 
   const updateData = {
     deletedRowIds: state.deletedRowIds,
@@ -29,7 +30,8 @@ const AddressBook = () => {
 
   return (
     <div>
-      <table border="1" cellPadding="5">
+      <h1>Address Book</h1>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th rowSpan="2">
@@ -140,12 +142,22 @@ const AddressBook = () => {
             </tr>
           ) : null}
         </tbody>
-      </table>
-      <div>
-        <button onClick={() => dispatch({ type: "delete" })}>Delete</button>
-        <button onClick={() => doUpdate(state)}>Update</button>
-        <button onClick={() => dispatch({ type: "add" })}>Add</button>
-      </div>
+      </Table>
+      <Row>
+        <Col className="text-left p-5">
+          <Button variant="danger" onClick={() => dispatch({ type: "delete" })}>
+            Delete
+          </Button>
+        </Col>
+        <Col className="text-right p-5">
+          <Button variant="warning" className="mx-5" onClick={() => doUpdate(state)}>
+            Update
+          </Button>
+          <Button variant="warning" onClick={() => dispatch({ type: "add" })}>
+            Add
+          </Button>
+        </Col>
+      </Row>
     </div>
   );
 };
