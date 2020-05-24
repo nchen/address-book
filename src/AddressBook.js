@@ -5,6 +5,14 @@ import { useImmerReducer } from "use-immer";
 
 const _initialState = { ...initialState, data: addressData };
 
+const doUpdate = (state) => {
+  const updateData = {
+    deletedRowIds: state.deletedRowIds,
+    editedCellphones: state.editedCellphones
+  }
+  alert('Updating data: \n' + JSON.stringify(updateData));
+};
+
 const AddressBook = () => {
   let [state, dispatch] = useImmerReducer(addressBookReducer, _initialState);
 
@@ -117,7 +125,7 @@ const AddressBook = () => {
       </table>
       <div>
         <button onClick={() => dispatch({ type: "delete" })}>Delete</button>
-        <button>Update</button>
+        <button onClick={() => doUpdate(state)}>Update</button>
         <button onClick={() => dispatch({ type: "add" })}>Add</button>
       </div>
     </div>
