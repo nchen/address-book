@@ -62,6 +62,7 @@ const AddressBook = () => {
               />
             </th>
             <th
+              title={t("click_to_sort")}
               rowSpan="2"
               onClick={() =>
                 dispatch({ type: AddressBookActionTypes.SORT, payload: "id" })
@@ -70,6 +71,7 @@ const AddressBook = () => {
               {t("id")}
             </th>
             <th
+              title={t("click_to_sort")}
               rowSpan="2"
               onClick={() =>
                 dispatch({ type: AddressBookActionTypes.SORT, payload: "name" })
@@ -78,6 +80,7 @@ const AddressBook = () => {
               {t("name")}
             </th>
             <th
+              title={t("click_to_sort")}
               rowSpan="2"
               onClick={() =>
                 dispatch({
@@ -89,6 +92,7 @@ const AddressBook = () => {
               {t("location")}
             </th>
             <th
+              title={t("click_to_sort")}
               rowSpan="2"
               onClick={() =>
                 dispatch({
@@ -103,6 +107,7 @@ const AddressBook = () => {
           </tr>
           <tr>
             <th
+              title={t("click_to_sort")}
               onClick={() =>
                 dispatch({
                   type: AddressBookActionTypes.SORT,
@@ -113,6 +118,7 @@ const AddressBook = () => {
               {t("office")}
             </th>
             <th
+              title={t("click_to_sort")}
               onClick={() =>
                 dispatch({
                   type: AddressBookActionTypes.SORT,

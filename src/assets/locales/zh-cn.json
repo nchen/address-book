@@ -12,5 +12,6 @@
   "alert": "提示",
   "close": "关闭",
   "switch_lang": "语言切换到：",
-  "double_click_to_edit": "双击开始编辑"
+  "double_click_to_edit": "双击开始编辑",
+  "click_to_sort": "单击列标题可按此列排序"
 }
