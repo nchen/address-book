@@ -1,0 +1,15 @@
+{
+  "address_book_title": "Address Book",
+  "id": "ID",
+  "name": "Name",
+  "location": "Location",
+  "office": "Office",
+  "phone": "Phone",
+  "home": "Home",
+  "delete": "Delete",
+  "update": "Update",
+  "add": "Add",
+  "alert": "Alert",
+  "close": "Close",
+  "switch_lang": "Switch language to: "
+}

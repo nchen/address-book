@@ -4,10 +4,13 @@ import addressData from "./addressData.json";
 import { initialState, addressBookReducer } from "./addressBookReducer";
 import { useImmerReducer } from "use-immer";
 import { produce } from "immer";
+import { useTranslation, Trans, Translation } from "react-i18next";
 
 const _initialState = { ...initialState, data: addressData };
 
 const AddressBook = () => {
+  let { t, i18n } = useTranslation();
+
   let [state, dispatch] = useImmerReducer(addressBookReducer, _initialState);
   let [showDialog, setShowDialog] = useState(false);
   let [msg, setMsg] = useState("");
@@ -37,9 +40,19 @@ const AddressBook = () => {
 
   return (
     <div>
-      <h1>Address Book</h1>
+      <div className="text-right mt-3 mx-5">
+        {t("switch_lang")}
+        <Button
+          onClick={() =>
+            i18n.changeLanguage(i18n.language === "en" ? "zh" : "en")
+          }
+        >
+          {i18n.language === "en" ? "简体中文" : "English"}
+        </Button>
+      </div>
+      <h1>{t("address_book_title")}</h1>
 
-      <Table striped bordered hover>
+      <Table striped bordered hover className="table-sm mx-2">
         <thead>
           <tr>
             <th rowSpan="2">
@@ -53,38 +66,38 @@ const AddressBook = () => {
               rowSpan="2"
               onClick={() => dispatch({ type: "sort", payload: "id" })}
             >
-              ID
+              {t("id")}
             </th>
             <th
               rowSpan="2"
               onClick={() => dispatch({ type: "sort", payload: "name" })}
             >
-              Name
+              {t("name")}
             </th>
             <th
               rowSpan="2"
               onClick={() => dispatch({ type: "sort", payload: "location" })}
             >
-              Location
+              {t("location")}
             </th>
             <th
               rowSpan="2"
               onClick={() => dispatch({ type: "sort", payload: "office" })}
             >
-              Office
+              {t("office")}
             </th>
-            <th colSpan="2">Phone</th>
+            <th colSpan="2">{t("phone")}</th>
           </tr>
           <tr>
             <th
               onClick={() => dispatch({ type: "sort", payload: "officePhone" })}
             >
-              Office
+              {t("office")}
             </th>
             <th
               onClick={() => dispatch({ type: "sort", payload: "cellphone" })}
             >
-              Home
+              {t("home")}
             </th>
           </tr>
         </thead>
@@ -190,7 +203,7 @@ const AddressBook = () => {
       <Row>
         <Col className="text-left p-5">
           <Button variant="danger" onClick={() => dispatch({ type: "delete" })}>
-            Delete
+            {t("delete")}
           </Button>
         </Col>
         <Col className="text-right p-5">
@@ -199,22 +212,24 @@ const AddressBook = () => {
             className="mx-5"
             onClick={() => doUpdate(state)}
           >
-            Update
+            {t("update")}
           </Button>
           <Button variant="warning" onClick={() => dispatch({ type: "add" })}>
-            Add
+            {t("add")}
           </Button>
         </Col>
       </Row>
 
       <Modal show={showDialog} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Alert</Modal.Title>
+          <Modal.Title>{t("alert")}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{msg}</Modal.Body>
+        <Modal.Body>
+          <pre>{msg}</pre>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
-            Close
+            {t("close")}
           </Button>
         </Modal.Footer>
       </Modal>

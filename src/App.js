@@ -1,6 +1,7 @@
-import React from 'react';
-import './App.css';
-import AddressBook from './AddressBook';
+import React from "react";
+import "./App.css";
+import AddressBook from "./AddressBook";
+import "./i18n";
 
 function App() {
   return (
