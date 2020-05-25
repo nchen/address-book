@@ -11,5 +11,6 @@
   "add": "Add",
   "alert": "Alert",
   "close": "Close",
-  "switch_lang": "Switch language to: "
+  "switch_lang": "Switch language to: ",
+  "double_click_to_edit": "Double click to Edit"
 }

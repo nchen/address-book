@@ -1,7 +1,11 @@
 import React from "react";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import addressData from "../assets/data/addressData.json";
-import { initialState, addressBookReducer } from "../addressBookReducer";
+import {
+  AddressBookActionTypes,
+  initialState,
+  addressBookReducer,
+} from "../addressBookReducer";
 import { useImmerReducer } from "use-immer";
 import { produce } from "immer";
 import { useTranslation } from "react-i18next";
@@ -52,30 +56,46 @@ const AddressBook = () => {
               <input
                 type="checkbox"
                 checked={state.selectAll}
-                onChange={() => dispatch({ type: "select_all" })}
+                onChange={() =>
+                  dispatch({ type: AddressBookActionTypes.SELECT_ALL })
+                }
               />
             </th>
             <th
               rowSpan="2"
-              onClick={() => dispatch({ type: "sort", payload: "id" })}
+              onClick={() =>
+                dispatch({ type: AddressBookActionTypes.SORT, payload: "id" })
+              }
             >
               {t("id")}
             </th>
             <th
               rowSpan="2"
-              onClick={() => dispatch({ type: "sort", payload: "name" })}
+              onClick={() =>
+                dispatch({ type: AddressBookActionTypes.SORT, payload: "name" })
+              }
             >
               {t("name")}
             </th>
             <th
               rowSpan="2"
-              onClick={() => dispatch({ type: "sort", payload: "location" })}
+              onClick={() =>
+                dispatch({
+                  type: AddressBookActionTypes.SORT,
+                  payload: "location",
+                })
+              }
             >
               {t("location")}
             </th>
             <th
               rowSpan="2"
-              onClick={() => dispatch({ type: "sort", payload: "office" })}
+              onClick={() =>
+                dispatch({
+                  type: AddressBookActionTypes.SORT,
+                  payload: "office",
+                })
+              }
             >
               {t("office")}
             </th>
@@ -83,12 +103,22 @@ const AddressBook = () => {
           </tr>
           <tr>
             <th
-              onClick={() => dispatch({ type: "sort", payload: "officePhone" })}
+              onClick={() =>
+                dispatch({
+                  type: AddressBookActionTypes.SORT,
+                  payload: "officePhone",
+                })
+              }
             >
               {t("office")}
             </th>
             <th
-              onClick={() => dispatch({ type: "sort", payload: "cellphone" })}
+              onClick={() =>
+                dispatch({
+                  type: AddressBookActionTypes.SORT,
+                  payload: "cellphone",
+                })
+              }
             >
               {t("home")}
             </th>
@@ -102,7 +132,10 @@ const AddressBook = () => {
                   type="checkbox"
                   checked={addr.selected || false}
                   onChange={() =>
-                    dispatch({ type: "select", payload: addr.id })
+                    dispatch({
+                      type: AddressBookActionTypes.SELECT,
+                      payload: addr.id,
+                    })
                   }
                 />
               </td>
@@ -112,8 +145,12 @@ const AddressBook = () => {
               <td>{addr.office}</td>
               <td>{addr.officePhone}</td>
               <td
+                title={t("double_click_to_edit")}
                 onDoubleClick={() =>
-                  dispatch({ type: "edit", payload: addr.id })
+                  dispatch({
+                    type: AddressBookActionTypes.EDIT,
+                    payload: addr.id,
+                  })
                 }
               >
                 {state.editingRowId === addr.id ? (
@@ -121,7 +158,7 @@ const AddressBook = () => {
                     value={addr.cellphone}
                     onChange={(evt) =>
                       dispatch({
-                        type: "phone_changed",
+                        type: AddressBookActionTypes.PHONE_CHANGED,
                         payload: evt.target.value,
                       })
                     }
@@ -140,7 +177,7 @@ const AddressBook = () => {
                 <input
                   onChange={(evt) =>
                     dispatch({
-                      type: "add_input_changed",
+                      type: AddressBookActionTypes.ADD_INPUT_CHANGED,
                       payload: { field: "name", value: evt.target.value },
                     })
                   }
@@ -150,7 +187,7 @@ const AddressBook = () => {
                 <input
                   onChange={(evt) =>
                     dispatch({
-                      type: "add_input_changed",
+                      type: AddressBookActionTypes.ADD_INPUT_CHANGED,
                       payload: { field: "location", value: evt.target.value },
                     })
                   }
@@ -160,7 +197,7 @@ const AddressBook = () => {
                 <input
                   onChange={(evt) =>
                     dispatch({
-                      type: "add_input_changed",
+                      type: AddressBookActionTypes.ADD_INPUT_CHANGED,
                       payload: { field: "office", value: evt.target.value },
                     })
                   }
@@ -170,7 +207,7 @@ const AddressBook = () => {
                 <input
                   onChange={(evt) =>
                     dispatch({
-                      type: "add_input_changed",
+                      type: AddressBookActionTypes.ADD_INPUT_CHANGED,
                       payload: {
                         field: "officePhone",
                         value: evt.target.value,
@@ -183,7 +220,7 @@ const AddressBook = () => {
                 <input
                   onChange={(evt) =>
                     dispatch({
-                      type: "add_input_changed",
+                      type: AddressBookActionTypes.ADD_INPUT_CHANGED,
                       payload: { field: "cellphone", value: evt.target.value },
                     })
                   }
@@ -195,7 +232,10 @@ const AddressBook = () => {
       </Table>
       <Row>
         <Col className="text-left p-5">
-          <Button variant="danger" onClick={() => dispatch({ type: "delete" })}>
+          <Button
+            variant="danger"
+            onClick={() => dispatch({ type: AddressBookActionTypes.DELETE })}
+          >
             {t("delete")}
           </Button>
         </Col>
@@ -207,7 +247,10 @@ const AddressBook = () => {
           >
             {t("update")}
           </Button>
-          <Button variant="warning" onClick={() => dispatch({ type: "add" })}>
+          <Button
+            variant="warning"
+            onClick={() => dispatch({ type: AddressBookActionTypes.ADD })}
+          >
             {t("add")}
           </Button>
         </Col>

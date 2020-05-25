@@ -11,5 +11,6 @@
   "add": "添加",
   "alert": "提示",
   "close": "关闭",
-  "switch_lang": "语言切换到："
+  "switch_lang": "语言切换到：",
+  "double_click_to_edit": "双击开始编辑"
 }
