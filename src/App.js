@@ -1,6 +1,6 @@
 import React from "react";
-import "./App.css";
-import AddressBook from "./AddressBook";
+import "./assets/css/App.css";
+import AddressBook from "./components/AddressBook";
 import "./i18n";
 
 function App() {

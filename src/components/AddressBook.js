@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Button, Row, Col } from "react-bootstrap";
-import addressData from "./addressData.json";
-import { initialState, addressBookReducer } from "./addressBookReducer";
+import addressData from "../assets/data/addressData.json";
+import { initialState, addressBookReducer } from "../addressBookReducer";
 import { useImmerReducer } from "use-immer";
 import { produce } from "immer";
 import { useTranslation } from "react-i18next";
