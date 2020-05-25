@@ -1,22 +1,16 @@
-import React, { useState } from "react";
-import { Table, Button, Row, Col, Modal } from "react-bootstrap";
+import React from "react";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import addressData from "./addressData.json";
 import { initialState, addressBookReducer } from "./addressBookReducer";
 import { useImmerReducer } from "use-immer";
 import { produce } from "immer";
-import { useTranslation, Trans, Translation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const _initialState = { ...initialState, data: addressData };
 
 const AddressBook = () => {
   let { t, i18n } = useTranslation();
-
   let [state, dispatch] = useImmerReducer(addressBookReducer, _initialState);
-  let [showDialog, setShowDialog] = useState(false);
-  let [msg, setMsg] = useState("");
-  const handleClose = () => {
-    setShowDialog(false);
-  };
 
   const doUpdate = (state) => {
     // Exclude deleted rows for updating.
@@ -34,8 +28,7 @@ const AddressBook = () => {
       editedCellphones,
       addedRow: state.addedRow,
     };
-    setMsg("Updating data: \n" + JSON.stringify(updateData));
-    setShowDialog(true);
+    alert("Updating data: \n" + JSON.stringify(updateData));
   };
 
   return (
@@ -219,20 +212,6 @@ const AddressBook = () => {
           </Button>
         </Col>
       </Row>
-
-      <Modal show={showDialog} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>{t("alert")}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <pre>{msg}</pre>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            {t("close")}
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };
