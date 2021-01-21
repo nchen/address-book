@@ -9,7 +9,7 @@
     "bootstrap": "^4.5.0",
     "i18next": "^19.4.4",
     "i18next-browser-languagedetector": "^4.2.0",
-    "immer": "^6.0.8",
+    "immer": "^8.0.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
